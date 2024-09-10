@@ -7,7 +7,7 @@ public final class Constants {
     public static final  String RESOURCES_PATH             = "resources";
     public static final  String DEFAULT_CLIENT_FILE_PATH = "src/main/resources/data/defaultClient.json";
     public static final  String DEFAULT_RESOURCE_FILE_PATH = "src/main/resources/data/defaultResource.json";
-    public static final String BASE_URL                 = "https://66d9e7354ad2f6b8ed566811.mockapi.io/";
+    public static final  String BASE_URL                 = "https://66d9e7354ad2f6b8ed566811.mockapi.io";
     public static final  String URL                      =  "/api/v1/%s";
     public static final  String URL_WITH_PARAM           = "/api/v1/%s/%s";
 
