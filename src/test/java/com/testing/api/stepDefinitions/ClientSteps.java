@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.path.json.exception.JsonPathException;
 import io.restassured.response.Response;
+import net.datafaker.Faker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
@@ -30,9 +31,31 @@ public class ClientSteps {
                 .prettify());
         Assert.assertEquals(200, response.statusCode());
         List<Client> clientList = clientRequest.getClientsEntity(response);
-        Assert.assertTrue(clientList.size() >= 10);
-        // TODO: HACER LA GENERACION DE LOS CLIENTES SI HAY MENOS DE 10
-        logger.info("Empieza");
+        Faker faker = new Faker();
+        if(clientList.size() < 10){
+            int index = 0;
+            while(index < 10){
+                String name = faker.name().firstName();
+                String lastName = faker.name().lastName();
+                String country = faker.country().name();
+                String city = faker.address().cityName();
+                String email = faker.internet().emailAddress();
+                String phone = faker.phoneNumber().phoneNumber();
+
+                Client newClient = new Client();
+                newClient.setName(name);
+                newClient.setLastName(lastName);
+                newClient.setCountry(country);
+                newClient.setCity(city);
+                newClient.setEmail(email);
+                newClient.setPhone(phone);
+
+                Response creationResponse = clientRequest.createClient(newClient);
+                Assert.assertEquals(201, creationResponse.statusCode()); // Verifica que la creación fue exitosa
+                logger.info("Client created with response: {}", creationResponse.jsonPath().prettify());
+                index++;
+            }
+        }
     }
 
     @Given("there is a client named {string}")
@@ -73,7 +96,7 @@ public class ClientSteps {
     public void iSendAPUTRequestToUpdateTheClient(String requestBody) {
         Client clientToUpdate = clientRequest.getClientEntity(requestBody);
         response = clientRequest.updatePhoneNumber(clientId, clientToUpdate);
-        logger.info(response.jsonPath());
+        logger.info(response.jsonPath().prettify());
     }
 
     @Then("the response should have a status code of {int}")

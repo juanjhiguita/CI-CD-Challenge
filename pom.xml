@@ -49,6 +49,12 @@
       <artifactId>gson</artifactId>
       <version>${gson.version}</version>
     </dependency>
+    <!-- Datafaker -->
+    <dependency>
+      <groupId>net.datafaker</groupId>
+      <artifactId>datafaker</artifactId>
+      <version>2.3.1</version>
+    </dependency>
 
     <!-- RestAssured for API testing -->
     <dependency>
