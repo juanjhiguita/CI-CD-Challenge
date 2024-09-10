@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.testing.api.models.Client;
 import com.testing.api.utils.Constants;
 import com.testing.api.utils.JsonFileReader;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.jetbrains.annotations.NotNull;
@@ -51,7 +52,7 @@ public class ClientRequest extends BaseRequest{
         return this.createClient(jsonFile.getClientByJson(Constants.DEFAULT_CLIENT_FILE_PATH));
     }
 
-    public Response updatePhoneNumber(Client client, String clientId) {
+    public Response updatePhoneNumber(String clientId, Client client) {
         endpoint = String.format(Constants.URL_WITH_PARAM, Constants.CLIENTS_PATH, clientId);
         return requestPut(endpoint, createBaseHeaders(), client);
     }
@@ -62,4 +63,29 @@ public class ClientRequest extends BaseRequest{
     }
 
 
+    public boolean validateSchema(Response response, String schemaPath) {
+        try {
+            response.then()
+                    .assertThat()
+                    .body(JsonSchemaValidator.matchesJsonSchemaInClasspath(schemaPath));
+            return true; // Return true if the assertion passes
+        } catch (AssertionError e) {
+            // Assertion failed, return false
+            return false;
+        }
+    }
+
+    public boolean includePhoneNumber(Response response) {
+        try{
+            String responseBody = response.getBody().asString();
+            if (responseBody.contains("phone")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
