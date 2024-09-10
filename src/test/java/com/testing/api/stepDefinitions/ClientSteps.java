@@ -6,6 +6,7 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.path.json.exception.JsonPathException;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +20,7 @@ public class ClientSteps {
     private final ClientRequest clientRequest = new ClientRequest();
     private Response response;
     private Client client;
+    private String clientId;
     private String oldPhoneNumber;
 
     @Given("there are at least 10 registered clients in the system")
@@ -35,15 +37,23 @@ public class ClientSteps {
 
     @Given("there is a client named {string}")
     public void thereIsAClientNamedLaura(String name) {
-        response = clientRequest.getClientsByName(name);
-        logger.info(response.jsonPath()
-                .prettify());
-        Assert.assertEquals(200, response.statusCode());
+        try{
+            response = clientRequest.getClientsByName(name);
+            List<Client> clientList = clientRequest.getClientsEntity(response);
+            if (clientList.isEmpty()) {
+                response = clientRequest.createDefaultClient();
+                logger.info(response.statusCode());
+                Assert.assertEquals(201, response.statusCode());
+            }
+            response = clientRequest.getClientsByName(name);
+            logger.info(response.jsonPath()
+                    .prettify());
+            Assert.assertEquals(200, response.statusCode());
 
-        List<Client> clientList = clientRequest.getClientsEntity(response);
-        if (clientList.isEmpty()) {
+        }catch (JsonPathException jsonPathException){
             response = clientRequest.createDefaultClient();
-            logger.info(response.statusCode());
+            logger.info(response.jsonPath()
+                    .prettify());
             Assert.assertEquals(201, response.statusCode());
         }
     }
@@ -51,14 +61,16 @@ public class ClientSteps {
 
     @When("I retrieve the details of the first client named {string}")
     public void iRetrieveTheDetailsOfTheFirstClientNamed(String name) {
+        response = clientRequest.getClientsByName(name);
         List<Client> clientList = clientRequest.getClientsEntity(response);
         client = clientList.get(0);
+        clientId = client.getId();
         oldPhoneNumber = client.getPhone();
         logger.info(client);
     }
 
-    @When("I send a PUT request to update the client with ID {string}")
-    public void iSendAPUTRequestToUpdateTheClientWithID(String clientId, String requestBody) {
+    @When("I send a PUT request to update the client")
+    public void iSendAPUTRequestToUpdateTheClient(String requestBody) {
         Client clientToUpdate = clientRequest.getClientEntity(requestBody);
         response = clientRequest.updatePhoneNumber(clientId, clientToUpdate);
         logger.info(response.jsonPath());
