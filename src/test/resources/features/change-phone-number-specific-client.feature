@@ -1,7 +1,7 @@
-@activez
+@active
 Feature: Update phone number of a specific client
 
-  @smokez
+  @smoke
   Scenario: Change the phone number of the first client named Laura
     Given there are at least 10 registered clients in the system
     And there is a client named "Laura"

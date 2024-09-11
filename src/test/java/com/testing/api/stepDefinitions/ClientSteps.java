@@ -1,6 +1,7 @@
 package com.testing.api.stepDefinitions;
 
 import com.testing.api.models.Client;
+import com.testing.api.requests.BaseRequest;
 import com.testing.api.requests.ClientRequest;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -17,10 +18,8 @@ import org.junit.Assert;
 import java.util.List;
 import java.util.Map;
 
-public class ClientSteps {
-    private static final Logger logger = LogManager.getLogger(ClientSteps.class);
+public class ClientSteps extends BaseSteps {
     private final ClientRequest clientRequest = new ClientRequest();
-    private Response response;
     private Client client;
     private String clientId;
     private String oldPhoneNumber;
@@ -82,7 +81,6 @@ public class ClientSteps {
         }
     }
 
-
     @When("I retrieve the details of the first client named {string}")
     public void iRetrieveTheDetailsOfTheFirstClientNamed(String name) {
         response = clientRequest.getClientsByName(name);
@@ -97,12 +95,6 @@ public class ClientSteps {
     public void iSendAPUTRequestToUpdateTheClient(String requestBody) {
         Client clientToUpdate = clientRequest.getClientEntity(requestBody);
         response = clientRequest.updatePhoneNumber(clientId, clientToUpdate);
-        logger.info(response.jsonPath().prettify());
-    }
-
-    @Then("the response should have a status code of {int}")
-    public void theResponseShouldHaveAStatusCodeOf(int statusCode) {
-        Assert.assertEquals(statusCode, response.statusCode());
         logger.info(response.jsonPath().prettify());
     }
 
@@ -136,7 +128,7 @@ public class ClientSteps {
     public void theUpdatedPhoneNumberShouldBeDifferentFromTheOldPhoneNumber() {
         client = clientRequest.getClientEntity(response.jsonPath().prettify());
         Assert.assertNotEquals(oldPhoneNumber, client.getPhone());
-        logger.info("Termina");
+        logger.info("Finish");
     }
 
     @When("I create a new client")
@@ -171,4 +163,6 @@ public class ClientSteps {
     public void validateThatResponseBodyHaveAllTheData() {
         Assert.assertTrue(clientRequest.isUpdateResponseBodyValid(response));
     }
+
+
 }
