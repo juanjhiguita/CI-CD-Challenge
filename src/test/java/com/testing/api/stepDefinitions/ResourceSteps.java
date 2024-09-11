@@ -1,12 +1,12 @@
 package com.testing.api.stepDefinitions;
 import com.testing.api.models.Resource;
 import com.testing.api.requests.ResourceRequest;
+import com.testing.api.utils.DataGenerator;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
-import net.datafaker.Faker;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,27 +31,10 @@ public class ResourceSteps {
         response = resourceRequest.getActiveResources();
         Assert.assertEquals(200, response.statusCode());
         resourceActiveList = resourceRequest.getResourcesEntity(response);
-        Faker faker = new Faker();
         if(resourceActiveList.size() < numberResourcesNeeded){
             int index = 0;
             while(index < numberResourcesNeeded){
-                String name = faker.commerce().productName();
-                String trademark = faker.company().name();
-                int stock = faker.number().positive();
-                float price = faker.number().randomNumber(6, true);
-                String description = faker.lorem().sentence();
-                String tags = faker.lorem().word();
-                boolean active = true;
-
-                Resource newResource = new Resource();
-                newResource.setName(name);
-                newResource.setTrademark(trademark);
-                newResource.setStock(stock);
-                newResource.setPrice(price);
-                newResource.setDescription(description);
-                newResource.setTags(tags);
-                newResource.setActive(active);
-
+                Resource newResource = DataGenerator.generateResource();
                 Response creationResponse = resourceRequest.createResource(newResource);
                 Assert.assertEquals(201, creationResponse.statusCode());
                 logger.info("Resource created with response: {}", creationResponse.jsonPath().prettify());
