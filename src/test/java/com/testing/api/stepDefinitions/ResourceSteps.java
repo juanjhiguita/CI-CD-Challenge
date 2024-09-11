@@ -2,10 +2,9 @@ package com.testing.api.stepDefinitions;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class ResourceSteps extends BaseSteps{
+public class ResourceSteps {
 
     @Given("there are at least {int} active resources")
     public void thereAreAtLeastActiveResources(int arg0) {

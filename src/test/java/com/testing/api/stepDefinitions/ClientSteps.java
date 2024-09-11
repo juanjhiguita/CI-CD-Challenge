@@ -1,7 +1,6 @@
 package com.testing.api.stepDefinitions;
 
 import com.testing.api.models.Client;
-import com.testing.api.requests.BaseRequest;
 import com.testing.api.requests.ClientRequest;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -18,11 +17,19 @@ import org.junit.Assert;
 import java.util.List;
 import java.util.Map;
 
-public class ClientSteps extends BaseSteps {
+public class ClientSteps {
+    protected static final Logger logger = LogManager.getLogger(ClientSteps.class);
+    protected Response response;
     private final ClientRequest clientRequest = new ClientRequest();
     private Client client;
     private String clientId;
     private String oldPhoneNumber;
+
+    @Then("the response should have a status code of {int}")
+    public void theResponseShouldHaveAStatusCodeOf(int statusCode) {
+        Assert.assertEquals(statusCode, response.statusCode());
+        logger.info(response.jsonPath().prettify());
+    }
 
     @Given("there are at least 10 registered clients in the system")
     public void thereAreRegisteredClientsInTheSystem() {
