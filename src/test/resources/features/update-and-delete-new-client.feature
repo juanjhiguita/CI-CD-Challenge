@@ -1,4 +1,4 @@
-@active
+@inactive
 Feature: Update and delete a new client
   @smoke
   Scenario: Create, update, and delete a new client

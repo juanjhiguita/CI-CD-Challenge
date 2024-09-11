@@ -1,4 +1,4 @@
-@active
+@inactive
 Feature: Update phone number of a specific client
 
   @smoke

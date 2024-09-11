@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ClientSteps {
-    protected static final Logger logger = LogManager.getLogger(ClientSteps.class);
-    protected Response response;
+    private static final Logger logger = LogManager.getLogger(ClientSteps.class);
+    private Response response;
     private final ClientRequest clientRequest = new ClientRequest();
     private Client client;
     private String clientId;
