@@ -24,7 +24,16 @@ public class ClientRequest extends BaseRequest{
     public Response getClientsByName(String name) {
         try {
             endpoint = String.format(Constants.URL_WITH_PARAM, Constants.CLIENTS_PATH , "?name=" + name);
-            // Realiza la solicitud GET
+            return requestGet(endpoint, createBaseHeaders());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Response getClientById(String id) {
+        try {
+            endpoint = String.format(Constants.URL_WITH_PARAM, Constants.CLIENTS_PATH , "?id=" + id);
             return requestGet(endpoint, createBaseHeaders());
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,6 +66,13 @@ public class ClientRequest extends BaseRequest{
         return requestPut(endpoint, createBaseHeaders(), client);
     }
 
+    public Response updateOnlyPhoneNumber(String clientId, String requestBody) {
+        endpoint = String.format(Constants.URL_WITH_PARAM, Constants.CLIENTS_PATH, clientId);
+        return requestPatch(endpoint,createBaseHeaders(), requestBody);
+    }
+
+
+
     public Client getClientEntity(String clientJson) {
         Gson gson = new Gson();
         return gson.fromJson(clientJson, Client.class);
@@ -79,6 +95,26 @@ public class ClientRequest extends BaseRequest{
         try{
             String responseBody = response.getBody().asString();
             if (responseBody.contains("phone")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public Response deleteClient(String clientId) {
+        endpoint = String.format(Constants.URL_WITH_PARAM, Constants.CLIENTS_PATH, clientId);
+        return requestDelete(endpoint, createBaseHeaders());
+    }
+
+    public boolean isUpdateResponseBodyValid(Response response) {
+        try{
+            String responseBody = response.getBody().asString();
+            if (responseBody.contains("name") && responseBody.contains("lastName") && responseBody.contains("country") &&
+                    responseBody.contains("city") && responseBody.contains("email") && responseBody.contains("phone")) {
                 return true;
             } else {
                 return false;

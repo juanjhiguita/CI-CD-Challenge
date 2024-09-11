@@ -3,6 +3,7 @@ package com.testing.api.stepDefinitions;
 import com.testing.api.models.Client;
 import com.testing.api.requests.ClientRequest;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -51,7 +52,7 @@ public class ClientSteps {
                 newClient.setPhone(phone);
 
                 Response creationResponse = clientRequest.createClient(newClient);
-                Assert.assertEquals(201, creationResponse.statusCode()); // Verifica que la creación fue exitosa
+                Assert.assertEquals(201, creationResponse.statusCode());
                 logger.info("Client created with response: {}", creationResponse.jsonPath().prettify());
                 index++;
             }
@@ -102,6 +103,7 @@ public class ClientSteps {
     @Then("the response should have a status code of {int}")
     public void theResponseShouldHaveAStatusCodeOf(int statusCode) {
         Assert.assertEquals(statusCode, response.statusCode());
+        logger.info(response.jsonPath().prettify());
     }
 
     @Then("the response should include the updated phone number")
@@ -135,5 +137,38 @@ public class ClientSteps {
         client = clientRequest.getClientEntity(response.jsonPath().prettify());
         Assert.assertNotEquals(oldPhoneNumber, client.getPhone());
         logger.info("Termina");
+    }
+
+    @When("I create a new client")
+    public void iCreateANewClient() {
+        response = clientRequest.createDefaultClient();
+        client = clientRequest.getClientEntity(response.jsonPath().prettify());
+        clientId = client.getId();
+        Assert.assertEquals(201, response.statusCode());
+        logger.info("Client created with response: {}", response.jsonPath().prettify());
+    }
+
+    @And("I find the newly created client")
+    public void iFindTheNewlyCreatedClient() {
+        response = clientRequest.getClientById(clientId);
+        Assert.assertEquals(200, response.statusCode());
+    }
+
+    @And("I send a PATCH request to update only the phone number of the new client")
+    public void iSendAPATCHRequestToUpdateOnlyThePhoneNumberOfTheNewClient(String requestBody) {
+        client = clientRequest.getClientEntity(requestBody);
+        response = clientRequest.updateOnlyPhoneNumber(clientId, requestBody);
+        logger.info(response.jsonPath());
+    }
+
+
+    @And("I send a DELETE request to delete the new client")
+    public void iSendADELETERequestToDeleteTheNewClient() {
+        response = clientRequest.deleteClient(clientId);
+    }
+
+    @And("validate that response body have all the data")
+    public void validateThatResponseBodyHaveAllTheData() {
+        Assert.assertTrue(clientRequest.isUpdateResponseBodyValid(response));
     }
 }
