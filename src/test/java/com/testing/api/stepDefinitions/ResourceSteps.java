@@ -1,10 +1,10 @@
 package com.testing.api.stepDefinitions;
-import com.testing.api.models.Client;
 import com.testing.api.models.Resource;
 import com.testing.api.requests.ResourceRequest;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import io.restassured.path.json.exception.JsonPathException;
 import io.restassured.response.Response;
 import net.datafaker.Faker;
 
@@ -25,8 +25,10 @@ public class ResourceSteps {
     @Given("there are at least {int} active resources")
     public void thereAreAtLeastActiveResources(int numberResourcesNeeded) {
         response = resourceRequest.getActiveResources();
-        logger.info(response.jsonPath()
-                .prettify());
+        if(response.statusCode() == 404){
+            resourceRequest.createDefaultResource();
+        }
+        response = resourceRequest.getActiveResources();
         Assert.assertEquals(200, response.statusCode());
         resourceActiveList = resourceRequest.getResourcesEntity(response);
         Faker faker = new Faker();

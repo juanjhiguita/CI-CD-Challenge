@@ -2,6 +2,7 @@ package com.testing.api.requests;
 
 import com.testing.api.models.Resource;
 import com.testing.api.utils.Constants;
+import com.testing.api.utils.JsonFileReader;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -70,4 +71,8 @@ public class ResourceRequest extends BaseRequest{
     }
 
 
+    public Response createDefaultResource() {
+        JsonFileReader jsonFile = new JsonFileReader();
+        return this.createResource(jsonFile.getResourceByJson(Constants.DEFAULT_RESOURCE_FILE_PATH));
+    }
 }
