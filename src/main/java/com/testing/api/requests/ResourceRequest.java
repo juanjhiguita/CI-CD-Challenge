@@ -75,4 +75,6 @@ public class ResourceRequest extends BaseRequest{
         JsonFileReader jsonFile = new JsonFileReader();
         return this.createResource(jsonFile.getResourceByJson(Constants.DEFAULT_RESOURCE_FILE_PATH));
     }
+
+
 }

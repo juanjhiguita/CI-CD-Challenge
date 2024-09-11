@@ -3,8 +3,8 @@ import com.testing.api.models.Resource;
 import com.testing.api.requests.ResourceRequest;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.path.json.exception.JsonPathException;
 import io.restassured.response.Response;
 import net.datafaker.Faker;
 
@@ -88,6 +88,12 @@ public class ResourceSteps {
         String path = "schemas/resourceSchema.json";
         Assert.assertTrue(resourceRequest.validateSchema(response, path));
         logger.info("Successfully Validated schema from Resource object");
+    }
+
+    @Then("the response should have status code {int}")
+    public void theResponseShouldHaveStatusCode(int statusCode) {
+        Assert.assertEquals(statusCode, response.statusCode());
+        logger.info(response.jsonPath().prettify());
     }
 
 
