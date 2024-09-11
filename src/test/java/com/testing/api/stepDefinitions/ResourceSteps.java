@@ -65,8 +65,14 @@ public class ResourceSteps {
         response = resourceRequest.getActiveResources();
         logger.info(response.jsonPath()
                 .prettify());
-        Assert.assertEquals(200, response.statusCode());
         resourceActiveList = resourceRequest.getResourcesEntity(response);
+    }
+
+    @Then("the response body should match with the expected schema")
+    public void theResponseBodyShouldMatchWithTheExpectedSchema() {
+        String path = "schemas/resourceListSchema.json";
+        Assert.assertTrue(resourceRequest.validateSchema(response, path));
+        logger.info("Successfully Validated schema from Resource object");
     }
 
     @And("I update all active resources to inactive")
@@ -82,19 +88,10 @@ public class ResourceSteps {
         }
     }
 
-
-    @And("the response body should match the expected schema")
-    public void theResponseBodyShouldMatchTheExpectedSchema() {
-        String path = "schemas/resourceSchema.json";
-        Assert.assertTrue(resourceRequest.validateSchema(response, path));
-        logger.info("Successfully Validated schema from Resource object");
-    }
-
     @Then("the response should have status code {int}")
     public void theResponseShouldHaveStatusCode(int statusCode) {
         Assert.assertEquals(statusCode, response.statusCode());
         logger.info(response.jsonPath().prettify());
     }
-
 
 }

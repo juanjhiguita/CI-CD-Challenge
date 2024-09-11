@@ -6,13 +6,13 @@
         "type": "string"
       },
       "trademark": {
-        "type": "number"
+        "type": "string"
       },
       "stock": {
-        "type": "float"
+        "type": "integer"
       },
       "price": {
-        "type": "string"
+        "type": "number"
       },
       "description": {
         "type": "string"
