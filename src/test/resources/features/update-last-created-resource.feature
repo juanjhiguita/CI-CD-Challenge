@@ -1,4 +1,4 @@
-@inactive
+@active @resources
 Feature: Update the last created resource
   @smoke
   Scenario: Update the last created resource
@@ -6,5 +6,5 @@ Feature: Update the last created resource
     When I find the latest created resource
     And I update all parameters of this resource
     Then the response should have status code 200
-    And the response body should match with the expected schema
+    And the response body should match with the expected resource schema
     And the updated resource should be different from the old resource

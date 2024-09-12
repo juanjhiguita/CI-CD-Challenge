@@ -53,13 +53,23 @@ public class ResourceSteps {
     }
 
     /**
-     * Step to validate that the response body matches the expected ResourceList schema.
+     * Step to validate that the response body matches the expected ResourceSchema schema.
      */
-    @Then("the response body should match with the expected schema")
-    public void theResponseBodyShouldMatchWithTheExpectedSchema() {
+    @Then("the response body should match with the expected resource schema")
+    public void theResponseBodyShouldMatchWithTheExpectedResourceSchema() {
+        String path = "schemas/resourceSchema.json";
+        Assert.assertTrue(resourceRequest.validateSchema(response, path));
+        logger.info("Successfully Validated schema from Resource");
+    }
+
+    /**
+     * Step to validate that the response body matches the expected ResourceListSchema schema.
+     */
+    @Then("the response body should match with the expected resource list schema")
+    public void theResponseBodyShouldMatchWithTheExpectedResourceListSchema() {
         String path = "schemas/resourceListSchema.json";
         Assert.assertTrue(resourceRequest.validateSchema(response, path));
-        logger.info("Successfully Validated schema from Resource object");
+        logger.info("Successfully Validated schema from Resource list");
     }
 
     /**
