@@ -159,23 +159,4 @@ public class ClientRequest extends BaseRequest{
         return requestDelete(endpoint, createBaseHeaders());
     }
 
-    /**
-     * Validate if the update response body is correct
-     * @param response the API response
-     * @return true if the response contains all expected fields, false otherwise
-     */
-    public boolean isUpdateResponseBodyValid(Response response) {
-        try{
-            String responseBody = response.getBody().asString();
-            if (responseBody.contains("name") && responseBody.contains("lastName") && responseBody.contains("country") &&
-                    responseBody.contains("city") && responseBody.contains("email") && responseBody.contains("phone")) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 }
