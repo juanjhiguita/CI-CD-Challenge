@@ -5,6 +5,7 @@ import com.testing.api.models.Resource;
 import net.datafaker.Faker;
 
 public class DataGenerator {
+
     public static Resource generateResource(){
         Faker faker = new Faker();
         String name = faker.commerce().productName();
@@ -24,5 +25,29 @@ public class DataGenerator {
         newResource.setTags(tags);
         newResource.setActive(active);
         return newResource;
+    }
+
+    public static Client generateClient(){
+        Faker faker = new Faker();
+        String name = faker.name().firstName();
+        String lastName = faker.name().lastName();
+        String country = faker.country().name();
+        String city = faker.address().cityName();
+        String email = faker.internet().emailAddress();
+        String phone = faker.phoneNumber().phoneNumber();
+
+        Client newClient = new Client();
+        newClient.setName(name);
+        newClient.setLastName(lastName);
+        newClient.setCountry(country);
+        newClient.setCity(city);
+        newClient.setEmail(email);
+        newClient.setPhone(phone);
+        return newClient;
+    }
+
+    public static String generatePhoneNumber(){
+        Faker faker = new Faker();
+        return faker.phoneNumber().phoneNumber();
     }
 }

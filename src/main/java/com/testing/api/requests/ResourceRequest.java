@@ -1,5 +1,7 @@
 package com.testing.api.requests;
 
+import com.google.gson.Gson;
+import com.testing.api.models.Client;
 import com.testing.api.models.Resource;
 import com.testing.api.utils.Constants;
 import com.testing.api.utils.JsonFileReader;
@@ -76,4 +78,13 @@ public class ResourceRequest extends BaseRequest{
     }
 
 
+    public Response updateAllParameters(String resourceId, Resource resource) {
+        endpoint = String.format(Constants.URL_WITH_PARAM, Constants.RESOURCES_PATH, resourceId);
+        return requestPut(endpoint, createBaseHeaders(), resource);
+    }
+
+    public Resource getResourceEntity(String resourceJson) {
+        Gson gson = new Gson();
+        return gson.fromJson(resourceJson, Resource.class);
+    }
 }
