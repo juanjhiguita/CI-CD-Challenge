@@ -2,9 +2,14 @@ package com.testing.api.utils;
 
 import com.testing.api.models.Client;
 import com.testing.api.models.Resource;
+import com.testing.api.requests.ClientRequest;
+import io.restassured.response.Response;
 import net.datafaker.Faker;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DataGenerator {
+    private static final Logger logger = LogManager.getLogger(DataGenerator.class);
 
     public static Resource generateResource(){
         Faker faker = new Faker();
@@ -49,5 +54,16 @@ public class DataGenerator {
     public static String generatePhoneNumber(){
         Faker faker = new Faker();
         return faker.phoneNumber().phoneNumber();
+    }
+
+    public static void generateClients(int numberClientsToGenerate){
+        int index = 0;
+        while(index < numberClientsToGenerate){
+            Client newClient = DataGenerator.generateClient();
+            ClientRequest clientRequest = new ClientRequest();
+            Response creationResponse = clientRequest.createClient(newClient);
+            logger.info("Client created with response: {}", creationResponse.jsonPath().prettify());
+            index++;
+        }
     }
 }

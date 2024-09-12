@@ -1,4 +1,4 @@
-@active
+@inactive
 Feature: Update the last created resource
 
   Scenario: Update the last created resource

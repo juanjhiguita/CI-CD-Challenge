@@ -21,6 +21,11 @@ public class ClientRequest extends BaseRequest{
         return requestGet(endpoint, createBaseHeaders());
     }
 
+    /**
+     * Get clients by name
+     * @param name the name to filter clients by
+     * @return rest-assured response
+     */
     public Response getClientsByName(String name) {
         try {
             endpoint = String.format(Constants.URL_WITH_PARAM, Constants.CLIENTS_PATH , "?name=" + name);
@@ -31,6 +36,11 @@ public class ClientRequest extends BaseRequest{
         }
     }
 
+    /**
+     * Get client by ID
+     * @param id the ID of the client to retrieve
+     * @return rest-assured response
+     */
     public Response getClientById(String id) {
         try {
             endpoint = String.format(Constants.URL_WITH_PARAM, Constants.CLIENTS_PATH , "?id=" + id);
@@ -41,6 +51,11 @@ public class ClientRequest extends BaseRequest{
         }
     }
 
+    /**
+     * Parse response to get a list of Client objects
+     * @param response the API response
+     * @return list of Client objects
+     */
     public List<Client> getClientsEntity(@NotNull Response response) {
         JsonPath jsonPath = response.jsonPath();
         return jsonPath.getList("", Client.class);
@@ -56,29 +71,53 @@ public class ClientRequest extends BaseRequest{
         return requestPost(endpoint, createBaseHeaders(), client);
     }
 
+    /**
+     * Create a default client from a JSON file
+     * @return rest-assured response
+     */
     public Response createDefaultClient() {
         JsonFileReader jsonFile = new JsonFileReader();
         return this.createClient(jsonFile.getClientByJson(Constants.DEFAULT_CLIENT_FILE_PATH));
     }
 
+    /**
+     * Update the phone number of a client
+     * @param clientId the ID of the client to update
+     * @param client the client model with updated data
+     * @return rest-assured response
+     */
     public Response updatePhoneNumber(String clientId, Client client) {
         endpoint = String.format(Constants.URL_WITH_PARAM, Constants.CLIENTS_PATH, clientId);
         return requestPut(endpoint, createBaseHeaders(), client);
     }
 
+    /**
+     * Update only the phone number of a client
+     * @param clientId the ID of the client to update
+     * @param requestBody the JSON body containing the new phone number
+     * @return rest-assured response
+     */
     public Response updateOnlyPhoneNumber(String clientId, String requestBody) {
         endpoint = String.format(Constants.URL_WITH_PARAM, Constants.CLIENTS_PATH, clientId);
         return requestPatch(endpoint,createBaseHeaders(), requestBody);
     }
 
-
-
+    /**
+     * Convert JSON string to Client object
+     * @param clientJson JSON string representation of a client
+     * @return Client object
+     */
     public Client getClientEntity(String clientJson) {
         Gson gson = new Gson();
         return gson.fromJson(clientJson, Client.class);
     }
 
-
+    /**
+     * Validate the response schema
+     * @param response the API response
+     * @param schemaPath path to the JSON schema file
+     * @return true if schema validation passes, false otherwise
+     */
     public boolean validateSchema(Response response, String schemaPath) {
         try {
             response.then()
@@ -91,6 +130,11 @@ public class ClientRequest extends BaseRequest{
         }
     }
 
+    /**
+     * Check if the response body includes phone number
+     * @param response the API response
+     * @return true if phone number is included, false otherwise
+     */
     public boolean includePhoneNumber(Response response) {
         try{
             String responseBody = response.getBody().asString();
@@ -105,11 +149,21 @@ public class ClientRequest extends BaseRequest{
         }
     }
 
+    /**
+     * Delete a client by ID
+     * @param clientId the ID of the client to delete
+     * @return rest-assured response
+     */
     public Response deleteClient(String clientId) {
         endpoint = String.format(Constants.URL_WITH_PARAM, Constants.CLIENTS_PATH, clientId);
         return requestDelete(endpoint, createBaseHeaders());
     }
 
+    /**
+     * Validate if the update response body is correct
+     * @param response the API response
+     * @return true if the response contains all expected fields, false otherwise
+     */
     public boolean isUpdateResponseBodyValid(Response response) {
         try{
             String responseBody = response.getBody().asString();
