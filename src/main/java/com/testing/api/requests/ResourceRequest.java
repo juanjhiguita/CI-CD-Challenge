@@ -1,7 +1,6 @@
 package com.testing.api.requests;
 
 import com.google.gson.Gson;
-import com.testing.api.models.Client;
 import com.testing.api.models.Resource;
 import com.testing.api.utils.Constants;
 import com.testing.api.utils.JsonFileReader;
@@ -23,16 +22,30 @@ public class ResourceRequest extends BaseRequest{
         return requestGet(endpoint, createBaseHeaders());
     }
 
+    /**
+     * Parse response to get a list of Resource objects
+     * @param response the API response
+     * @return list of Resource objects
+     */
     public List<Resource> getResourcesEntity(@NotNull Response response) {
         JsonPath jsonPath = response.jsonPath();
         return jsonPath.getList("", Resource.class);
     }
 
+    /**
+     * Create resource
+     * @param resource model
+     * @return rest-assured response
+     */
     public Response createResource(Resource resource) {
         endpoint = String.format(Constants.URL, Constants.RESOURCES_PATH);
         return requestPost(endpoint, createBaseHeaders(), resource);
     }
 
+    /**
+     * Get the resource that have active field in true
+     * @return rest-assured response
+     */
     public Response getActiveResources() {
         try {
             boolean active = true;
@@ -44,22 +57,34 @@ public class ResourceRequest extends BaseRequest{
         }
     }
 
-    public Response getInactiveResources() {
-        try {
-            boolean active = false;
-            endpoint = String.format(Constants.URL_WITH_PARAM, Constants.RESOURCES_PATH , "?active=" + active);
-            return requestGet(endpoint, createBaseHeaders());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public Response updateActive(String resourceId, Resource resource) {
+    /**
+     * Update active field of a resource by ID
+     * @param resourceId the ID of the resource to update
+     * @param resource the resource model with updated data
+     * @return rest-assured response
+     */
+    public Response updateOnlyActive(String resourceId, Resource resource) {
         endpoint = String.format(Constants.URL_WITH_PARAM, Constants.RESOURCES_PATH, resourceId);
-        return requestPut(endpoint,createBaseHeaders(), resource);
+        return requestPatch(endpoint,createBaseHeaders(), resource);
     }
 
+    /**
+     * Update all fields of a resource by ID
+     * @param resourceId the ID of the resource to update
+     * @param resource the resource model with updated data
+     * @return rest-assured response
+     */
+    public Response updateAllParameters(String resourceId, Resource resource) {
+        endpoint = String.format(Constants.URL_WITH_PARAM, Constants.RESOURCES_PATH, resourceId);
+        return requestPut(endpoint, createBaseHeaders(), resource);
+    }
+
+    /**
+     * Validate the response schema
+     * @param response the API response
+     * @param schemaPath path to the JSON schema file
+     * @return true if schema validation passes, false otherwise
+     */
     public boolean validateSchema(Response response, String schemaPath) {
         try {
             response.then()
@@ -71,18 +96,20 @@ public class ResourceRequest extends BaseRequest{
         }
     }
 
-
+    /**
+     * Create a default resource from a JSON file
+     * @return rest-assured response
+     */
     public Response createDefaultResource() {
         JsonFileReader jsonFile = new JsonFileReader();
         return this.createResource(jsonFile.getResourceByJson(Constants.DEFAULT_RESOURCE_FILE_PATH));
     }
 
-
-    public Response updateAllParameters(String resourceId, Resource resource) {
-        endpoint = String.format(Constants.URL_WITH_PARAM, Constants.RESOURCES_PATH, resourceId);
-        return requestPut(endpoint, createBaseHeaders(), resource);
-    }
-
+    /**
+     * Convert JSON string to Resource object
+     * @param resourceJson JSON string representation of a resource
+     * @return Resource object
+     */
     public Resource getResourceEntity(String resourceJson) {
         Gson gson = new Gson();
         return gson.fromJson(resourceJson, Resource.class);

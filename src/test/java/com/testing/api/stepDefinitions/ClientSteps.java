@@ -28,10 +28,10 @@ public class ClientSteps {
     /**
      * Step to ensure there are at least a specified number of registered clients in the system.
      * Creates default clients if needed.
-     * @param numberResourcesNeeded The number of clients required in the system.
+     * @param numberClientNeeded The number of clients required in the system.
      */
     @Given("there are at least {int} registered clients in the system")
-    public void thereAreRegisteredClientsInTheSystem(int numberResourcesNeeded) {
+    public void thereAreRegisteredClientsInTheSystem(int numberClientNeeded) {
         response = clientRequest.getClients();
         if(response.statusCode() == 404){
             response = clientRequest.createDefaultClient();
@@ -40,8 +40,8 @@ public class ClientSteps {
         }
         Assert.assertEquals(200, response.statusCode());
         List<Client> clientList = clientRequest.getClientsEntity(response);
-        if(clientList.size() < numberResourcesNeeded){
-            DataGenerator.generateClients(numberResourcesNeeded);
+        if(clientList.size() < numberClientNeeded){
+            DataGenerator.generateClients(numberClientNeeded);
         }
     }
 
@@ -157,7 +157,6 @@ public class ClientSteps {
         response = clientRequest.getClientById(clientId);
         Assert.assertEquals(200, response.statusCode());
         logger.info("The newly client was found: {}", response.jsonPath().prettify());
-
     }
 
     /**

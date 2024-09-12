@@ -104,7 +104,7 @@ public class ClientRequest extends BaseRequest{
 
     /**
      * Convert JSON string to Client object
-     * @param clientJson JSON string representation of a client
+     * @param clientJson JSON string representation of a Client
      * @return Client object
      */
     public Client getClientEntity(String clientJson) {
