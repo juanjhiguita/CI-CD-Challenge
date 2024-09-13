@@ -1,14 +1,13 @@
-
-**RestAssuredPractice**
+# RestAssuredPractice
 
 This project uses Rest-Assured and Java to perform automated tests by connecting to mockapi.
 
-*Description:*
+## Description
 
 The tests are defined in the Gherkin format, covering the following features:
 
 - Feature: change-phone-number-specific-client
-  - Description: Updating the phone number of a specific customer.
+  - Description: Updating the phone number of a specific client.
 - Feature: get-list-of-active-resources
   - Description: Updating of active resources.
 - Feature: update-and-delete-new-client
@@ -16,11 +15,11 @@ The tests are defined in the Gherkin format, covering the following features:
 - Feature: update-last-created-resource
   - Description: Update of the last resource created.
 
-**CONFIGURATION**
+## CONFIGURATION
 
 Before running the tests, make sure you have the following installed:
 
-- Java 17 
+- Java 17
 - Maven
 
 In addition to having a project created in mockapi in order to have an api to consume the necessary information.
@@ -32,7 +31,7 @@ After having installed the above mentioned:
 - Enter the “Constants” file and modify the constants (paths, urls and more) used according to your requirement.
 - Install dependencies (by console with "mvn install" or by IDE in POM file)
 
-**EXECUTE TESTS**
+## EXECUTE TESTS
 
 To run the tests, note that the following tags are used in the project
 
