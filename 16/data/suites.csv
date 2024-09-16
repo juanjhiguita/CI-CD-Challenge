@@ -1,0 +1,5 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Mon Sep 16 23:50:42 GMT 2024","Mon Sep 16 23:50:43 GMT 2024","258","","Update the last created resource","","Update the last created resource","","Update the last created resource",""
+"passed","Mon Sep 16 23:50:42 GMT 2024","Mon Sep 16 23:50:42 GMT 2024","713","","Get the list of active resources","","Retrieve and update active resources","","Retrieve and update active resources",""
+"passed","Mon Sep 16 23:50:42 GMT 2024","Mon Sep 16 23:50:42 GMT 2024","174","","Update and delete a new client","","Create, update, and delete a new client","","Create, update, and delete a new client",""
+"passed","Mon Sep 16 23:50:38 GMT 2024","Mon Sep 16 23:50:42 GMT 2024","3527","","Update phone number of a specific client","","Change the phone number of the first client named Laura","","Change the phone number of the first client named Laura",""
