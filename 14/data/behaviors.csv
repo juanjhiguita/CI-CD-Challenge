@@ -1,0 +1,5 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"","Get the list of active resources","Retrieve and update active resources","0","0","1","0","0"
+"","Update phone number of a specific client","Change the phone number of the first client named Laura","0","0","1","0","0"
+"","Update the last created resource","Update the last created resource","0","0","1","0","0"
+"","Update and delete a new client","Create, update, and delete a new client","0","0","1","0","0"
