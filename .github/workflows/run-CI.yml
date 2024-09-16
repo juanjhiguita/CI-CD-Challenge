@@ -29,12 +29,12 @@ jobs:
       - name: Run tests
         run: mvn -DbrowserName=${{ inputs.browserName || 'CHROME' }} verify
       - name: Get Allure history
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         if: always()
         continue-on-error: true
         with:
-          ref: main
-          path: report
+          ref: gh-pages
+          path: gh-pages
       - name: Allure report action
         uses: simple-elf/allure-report-action@master
         if: always()
@@ -48,7 +48,7 @@ jobs:
         if: always()
         uses: crazy-max/ghaction-github-pages@v4
         with:
-          target_branch: report
+          target_branch: gh-pages
           build_dir: allure-history
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
