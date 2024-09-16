@@ -42,4 +42,4 @@ To run the tests, note that the following tags are used in the project
 
 Now, in the “TestRunner” file that is inside the “runner” folder, you can edit the name of the labels that have the tests that we want to be executed, by default this: "@clients or @resources" to execute the tests of the features related to the clients and to the resources.
 
-And finally to run the tests, run "TestRunner" file.
+And finally to run the tests, run "TestRunner" file .

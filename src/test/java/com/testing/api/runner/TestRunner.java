@@ -14,7 +14,9 @@ import org.junit.runner.RunWith;
         //dryRun = true,
         plugin = {"pretty:target/cucumber/cucumber.txt",
                 "html:target/cucumber/report",
-                "json:target/cucumber.json"}
+                "json:target/cucumber.json",
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+        }
 )
 public class TestRunner {
 }

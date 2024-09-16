@@ -1,4 +1,7 @@
 @active @clients
+@allure.label.layer:web
+@allure.label.owner:juanjhiguita
+@allure.label.page:/{org}/{repo}/labels
 Feature: Update and delete a new client
   @smoke
   Scenario: Create, update, and delete a new client
