@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.automation.mobile</groupId>
@@ -13,13 +13,14 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
-    <cucumber.version>7.13.0</cucumber.version>
+    <cucumber.version>7.18.1</cucumber.version>
     <lombok.version>1.18.28</lombok.version>
     <gson.version>2.10.1</gson.version>
     <rest.assured.version>5.3.1</rest.assured.version>
     <junit.version>5.10.0</junit.version>
     <log4j.version>2.20.0</log4j.version>
     <allure.version>2.24.0</allure.version>
+    <allure.cucumber.version>2.</allure.cucumber.version> <!-- Versión recomendada -->
   </properties>
 
   <dependencies>
@@ -50,6 +51,7 @@
       <artifactId>gson</artifactId>
       <version>${gson.version}</version>
     </dependency>
+
     <!-- Datafaker -->
     <dependency>
       <groupId>net.datafaker</groupId>
@@ -88,23 +90,25 @@
       <artifactId>log4j-core</artifactId>
       <version>${log4j.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.jetbrains</groupId>
       <artifactId>annotations</artifactId>
-      <version>RELEASE</version>
-      <scope>compile</scope>
+      <version>24.1.0</version> <!-- Usa la versión más reciente -->
     </dependency>
+
 
 
     <dependency>
       <groupId>io.qameta.allure</groupId>
       <artifactId>allure-cucumber6-jvm</artifactId>
-      <version>2.28.0</version>
+      <version>2.29.0</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.qameta.allure</groupId>
       <artifactId>allure-junit-platform</artifactId>
-      <version>2.28.0</version>
+      <version>${allure.version}</version>
     </dependency>
   </dependencies>
 
@@ -125,7 +129,7 @@
         <artifactId>allure-maven</artifactId>
         <version>2.12.0</version> <!-- Usa la versión más reciente -->
         <configuration>
-          <reportVersion>2.18.0</reportVersion>
+          <reportVersion>${allure.version}</reportVersion>
         </configuration>
       </plugin>
     </plugins>
