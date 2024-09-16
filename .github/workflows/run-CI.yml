@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'main'
-      - 'CI-CD-Configuration'
   pull_request:
     branches:
       - 'main'
@@ -30,12 +29,12 @@ jobs:
       - name: Run tests
         run: mvn -DbrowserName=${{ inputs.browserName || 'CHROME' }} verify
       - name: Get Allure history
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: always()
         continue-on-error: true
         with:
           ref: main
-          path: gh-pages
+          path: report
       - name: Allure report action
         uses: simple-elf/allure-report-action@master
         if: always()
