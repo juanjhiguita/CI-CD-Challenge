@@ -42,14 +42,14 @@ jobs:
         id: allure-report
         with:
           allure_results: ${{ vars.ALLURE_RESULTS_PATH }}
-          gh_pages: gh-pages
+          gh_pages: main
           allure_report: allure-report
           allure_history: allure-history
       - name: Deploy report to Github Pages
         if: always()
         uses: crazy-max/ghaction-github-pages@v4
         with:
-          target_branch: gh-pages
+          target_branch: Report
           build_dir: allure-history
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
