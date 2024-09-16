@@ -1,4 +1,7 @@
 @active @resources
+@allure.label.layer:web
+@allure.label.owner:juanjhiguita
+@allure.label.page:/{org}/{repo}/labels
 Feature: Update the last created resource
   @smoke
   Scenario: Update the last created resource

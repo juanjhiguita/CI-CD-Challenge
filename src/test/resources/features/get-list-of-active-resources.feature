@@ -1,4 +1,7 @@
 @active @resources
+@allure.label.layer:web
+@allure.label.owner:juanjhiguita
+@allure.label.page:/{org}/{repo}/labels
 Feature: Get the list of active resources
   @smoke
   Scenario: Retrieve and update active resources

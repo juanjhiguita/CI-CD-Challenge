@@ -1,4 +1,7 @@
 @active @clients
+@allure.label.layer:web
+@allure.label.owner:juanjhiguita
+@allure.label.page:/{org}/{repo}/labels
 Feature: Update phone number of a specific client
 
   @smoke
