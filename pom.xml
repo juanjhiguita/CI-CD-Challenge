@@ -95,13 +95,13 @@
     </dependency>
     <dependency>
       <groupId>io.qameta.allure</groupId>
-      <artifactId>allure-java-commons</artifactId>
-      <version>2.20.1</version>
+      <artifactId>allure-rest-assured</artifactId>
+      <version>2.16.1</version> <!-- Usa la versión más reciente -->
     </dependency>
     <dependency>
       <groupId>io.qameta.allure</groupId>
-      <artifactId>allure-testng</artifactId>
-      <version>2.20.1</version>
+      <artifactId>allure-junit4</artifactId>
+      <version>2.16.1</version> <!-- Usa la versión más reciente -->
     </dependency>
   </dependencies>
 
@@ -115,6 +115,14 @@
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.source}</target>
           <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>2.12.0</version> <!-- Usa la versión más reciente -->
+        <configuration>
+          <reportVersion>2.18.0</reportVersion>
         </configuration>
       </plugin>
     </plugins>
