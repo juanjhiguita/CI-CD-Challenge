@@ -18,8 +18,6 @@ public class Hooks {
         logger.info("	Scenario: " + scenario.getName());
         logger.info("*****************************************************************************************");
         RestAssured.baseURI = Constants.BASE_URL;
-        RestAssured.requestSpecification = RestAssured.given()
-                .filter(new AllureRestAssured());
     }
 
     @After
